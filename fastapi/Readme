@@ -2,3 +2,16 @@
 # cli of fastapi = {
     fastapi dev / fastapi  dev main.py
 }
+2day{
+    http request methods
+
+    #get - get an information
+#post - create something
+#put - update something already exist
+#delet - delet something,
+
+gt = greater than
+lt = less than
+ge = greater than or equal
+le =  less than or equal
+}
