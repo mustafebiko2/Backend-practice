@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
+from pydantic import BaseModel
+from typing import List
 
 
 app = FastAPI()
-
 
 books = [
     {
@@ -25,7 +26,7 @@ books = [
     },
     {
         "id": 3,
-        "title": "The web socket handbook",
+        "title": "The Web Socket Handbook",
         "author": "Alex Diaconu",
         "publisher": "Xinyu Wang",
         "published_date": "2021-01-01",
@@ -34,16 +35,16 @@ books = [
     },
     {
         "id": 4,
-        "title": "Head first Javascript",
+        "title": "Head First JavaScript",
         "author": "Hellen Smith",
-        "publisher": "Oreilly Media",
+        "publisher": "O'Reilly Media",
         "published_date": "2021-01-01",
         "page_count": 540,
         "language": "English",
     },
     {
         "id": 5,
-        "title": "Algorithms and Data Structures In Python",
+        "title": "Algorithms and Data Structures in Python",
         "author": "Kent Lee",
         "publisher": "Springer, Inc",
         "published_date": "2021-01-01",
@@ -53,14 +54,32 @@ books = [
     {
         "id": 6,
         "title": "Head First HTML5 Programming",
-        "author": "Eric T Freeman",
+        "author": "Eric T. Freeman",
         "publisher": "O'Reilly Media",
-        "published_date": "2011-21-01",
+        "published_date": "2011-01-21",
         "page_count": 3006,
         "language": "English",
     },
 ]
 
-@app.get('/books')
+class Book(BaseModel):
+    id: int
+    title: str
+    author: str
+    publisher: str
+    published_date: str
+    page_count: int
+    language: str
+
+@app.get('/books', response_model=List[Book])
 async def get_all_books():
     return books
+
+
+@app.post('/books', status_code=status.HTTP_201_CREATED)
+async def create_books(book_data:Book):
+ new_book = book_data.model_dump()
+
+ books.append(new_book)
+
+ return new_book
