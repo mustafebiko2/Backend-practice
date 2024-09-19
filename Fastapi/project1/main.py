@@ -1,7 +1,13 @@
 from fastapi import FastAPI , Body
+from pydantic import BaseModel
+
 
 
 app = FastAPI()
+
+class post(BaseModel):
+    school: str
+    establish: int
 
 @app.get('/home')
 def home():
@@ -19,8 +25,7 @@ def create_post(payload: dict = Body(...)):
     }
 
 @app.post('/school')
-def school(mustafe: dict = Body(...)):
-    print(mustafe)
-    return{
-        "new_post": f"school: {mustafe['school']}, establish: {mustafe['establish']}"
-    }
+def school(new_post: post):
+    print(new_post)
+    return{"data": "new post"}
+    
