@@ -17,3 +17,10 @@ def create_post(payload: dict = Body(...)):
     return {
         "new_post": f"name: {payload['name']}, phone: {payload['phone']}, email: {payload['email']}"
     }
+
+@app.post('/school')
+def school(mustafe: dict = Body(...)):
+    print(mustafe)
+    return{
+        "new_post": f"school: {mustafe['school']}, establish: {mustafe['establish']}"
+    }
