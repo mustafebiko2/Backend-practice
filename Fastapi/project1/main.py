@@ -7,7 +7,13 @@ app = FastAPI()
 def home():
     return{"message":"this is home "}
 
+from fastapi import FastAPI, Body
+
+app = FastAPI()
+
 @app.post('/createpost')
 def create_post(payload: dict = Body(...)):
     print(payload)
-    return{"message":"post has been created"}
+    return {
+        "new_post": f"name: {payload['name']}, phone: {payload['phone']}, email: {payload['email']}"
+    }
